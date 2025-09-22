@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Rosa Amarilla 💛</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Georgia&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Toggle para modo nocturno -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Control de audio -->
+    <div class="audio-control" id="audioControl">
+        <i class="fas fa-volume-up"></i>
+    </div>
+
+    <!-- Efecto de partículas -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Mensaje flotante -->
+    <div class="floating-message" id="floatingMessage">
+        <i class="fas fa-heart"></i>
+        <span id="messageText"></span>
+    </div>
+
+    <div class="container">
+        <!-- Decoraciones de fondo -->
+        <div class="decoration">🌼</div>
+        <div class="decoration">✨</div>
+        <div class="decoration">🌻</div>
+        <div class="decoration">💛</div>
+
+        <header>
+            <h1>Para ti, mi amor precioso</h1>
+            <div class="subtitle">Con todo mi corazón</div>
+        </header>
+
+        <div class="rose-scene" id="roseScene">
+            <div class="rose-container">
+                <div class="stem"></div>
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+                <div class="glow"></div>
+                <div class="petals">
+                    <div class="petal petal-1"></div>
+                    <div class="petal petal-2"></div>
+                    <div class="petal petal-3"></div>
+                    <div class="petal petal-4"></div>
+                    <div class="petal petal-5"></div>
+                    <div class="petal petal-6"></div>
+                    <div class="petal petal-7"></div>
+                    <div class="petal petal-8"></div>
+                    <div class="petal petal-9"></div>
+                    <div class="center"></div>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            Entre tus ojos la luna descansa, <br>
+            y en tu sonrisa despierta el sol. <br>
+            Cada palabra tuya es esperanza, <br>
+            cada silencio, un refugio de amor. <br>
+            <br>
+            Eres camino, estrella y destino, <br>
+            la melodía que nunca se apaga. <br>
+            Si el mundo es vasto, yo me imagino, <br>
+            que en tu abrazo todo se embriaga. <br>
+        </p>
+
+        <div class="button-container">
+            <button onclick="showLetter()">
+                <i class="fas fa-envelope"></i> Carta para ti
+            </button>
+            <button onclick="showRandomMessage()">
+                <i class="fas fa-comment"></i> Mensaje especial
+            </button>
+            <button onclick="makeRoseBloom()">
+                <i class="fas fa-magic"></i> Hacer florecer
+            </button>
+        </div>
+
+        <footer>
+            Hecho con <i class="fas fa-heart" style="color: #d4a017;"></i> para ti
+        </footer>
+    </div>
+
+    <!-- Página de carta (inicialmente oculta) -->
+    <div class="letter-container" id="letter">
+        <div class="seal">💌</div>
+        <div class="letter-border"></div>
+
+        <div class="letter-header">
+            <h2>Mi preciosa</h2>
+            <div class="letter-date" id="currentDate"></div>
+        </div>
+
+        <div class="letter-content">
+            <p>¡Hola, mi vida!</p>
+
+            <p>Bueno, quería darte un pequeño detallito a mi manera, jajaja al estilo programador xD. Hoy quiero
+                expresar un poco
+                de lo mucho que sentimos mi corazón y yo por ti. Esta carta va totalmente para ti, la chica que
+                conquistó mi corazón
+                y me tiene loco por ella. Sí, tú, la que está leyendo esto, la razón por la que mi corazón va a mil y
+                late fuerte cada
+                vez que pienso en tu sonrisa, en tu mirada, en todo lo que eres.</p>
+
+            <p>Recuerdo la primera vez que te vi, como si fuera ayer, ¿no? Fue un instante que quedó grabado en mi
+                memoria para siempre.
+                De un momento a otro, sin casi darme cuenta, te convertiste en la persona más importante de mi
+                corazoncito. Eres esa luz
+                que ilumina mis días, esa calma en medio del caos y esa emoción que me hace sentir vivo.</p>
+
+            <p>Cada día a tu lado es un regalo, y no dejo de agradecer por tener a alguien tan especial como tú. Eres
+                única,
+                increíblemente hermosa por dentro y por fuera, y no puedo evitar sonreír cuando pienso en lo afortunado
+                que soy de tenerte.</p>
+
+            <p>Te quiero tanto que si quisiera enseñarte cuánto te quiero, tardaríamos minutos, horas, días, semanas,
+                meses, años…
+                en fin, una eternidad para que llegues a saber lo que me ENCANTAS.</p>
+
+            <p>Tú y yo, para un nosotros, para siempre. ❤️</p>
+        </div>
+
+        <div class="letter-signature">Con todo mi amor,<br>La persona que mas te quiere</div>
+
+        <div class="letter-back">
+            <button onclick="hideLetter()">
+                <i class="fas fa-arrow-left"></i> Volver a la Rosa
+            </button>
+        </div>
+    </div>
+
+    <!-- Audio para efectos de sonido -->
+    <audio id="backgroundMusic" loop>
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5a4c7c6f0f.mp3?filename=soft-sweet-romantic-background-music-6440.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <audio id="bloomSound">
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/03/19/audio_345c531c2c.mp3?filename=magic-sound-8390.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <audio id="pageTurnSound">
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_3bcf76c825.mp3?filename=page-turn-120829.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

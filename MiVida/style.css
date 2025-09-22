@@ -1,0 +1,995 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background: linear-gradient(to bottom, #fff7d1, #fce38a, #ffdf6b);
+    color: #5a4a1f;
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background 1.5s ease, color 1.5s ease;
+}
+
+body.night-mode {
+    background: linear-gradient(to bottom, #1a1a2e, #16213e, #0f3460);
+    color: #e6e6ff;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="%23ffdd0066"/></svg>');
+    z-index: 0;
+    opacity: 0.5;
+    transition: opacity 1.5s ease;
+}
+
+body.night-mode::before {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23ffffff33"/></svg>');
+    opacity: 0.3;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.5s ease-out 0.5s forwards;
+}
+
+header {
+    padding: 30px 20px;
+}
+
+h1 {
+    font-size: 3.2em;
+    color: #d4a017;
+    text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.7);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+}
+
+body.night-mode h1 {
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, #d4a017, transparent);
+    transition: background 1.5s ease;
+}
+
+body.night-mode h1::after {
+    background: linear-gradient(to right, transparent, #ffd700, transparent);
+}
+
+.subtitle {
+    font-size: 1.4em;
+    color: #8B7500;
+    margin-bottom: 30px;
+    font-weight: 300;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .subtitle {
+    color: #e6c200;
+}
+
+p {
+    font-size: 1.25em;
+    max-width: 700px;
+    margin: 25px auto;
+    line-height: 1.7;
+    padding: 0 20px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+    transition: color 1.5s ease, text-shadow 1.5s ease;
+}
+
+body.night-mode p {
+    color: #e6e6ff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+/* Contenedor de la rosa mejorada */
+.rose-scene {
+    margin: 40px auto;
+    width: 300px;
+    height: 400px;
+    position: relative;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.rose-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: float 8s ease-in-out infinite;
+}
+
+.rose-container:hover {
+    animation: float 4s ease-in-out infinite, rotate 20s linear infinite;
+}
+
+/* Tallo mejorado */
+.stem {
+    position: absolute;
+    width: 10px;
+    height: 220px;
+    background: linear-gradient(to bottom, #2e8b57, #3cb371, #228B22);
+    border-radius: 5px;
+    bottom: 0;
+    left: 145px;
+    z-index: 1;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 1.5s ease, box-shadow 1.5s ease;
+}
+
+body.night-mode .stem {
+    background: linear-gradient(to bottom, #1a3c2b, #2a5c43, #1e462e);
+    box-shadow: 0 0 5px rgba(46, 139, 87, 0.4);
+}
+
+/* Hojas mejoradas */
+.leaf {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to bottom right, #3cb371, #2E8B57);
+    border-radius: 0 100% 0 100%;
+    transform: rotate(-45deg);
+    z-index: 2;
+    bottom: 70px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: leafFloat 7s ease-in-out infinite;
+    transition: background 1.5s ease, box-shadow 1.5s ease;
+}
+
+body.night-mode .leaf {
+    background: linear-gradient(to bottom right, #2a5c43, #1a3c2b);
+    box-shadow: 0 0 5px rgba(46, 139, 87, 0.4);
+}
+
+.leaf::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 10px;
+    background: linear-gradient(to right, #2E8B57, #228B22);
+    border-radius: 5px;
+    bottom: -6px;
+    left: 17px;
+    transform: rotate(45deg);
+    transition: background 1.5s ease;
+}
+
+body.night-mode .leaf::after {
+    background: linear-gradient(to right, #1a3c2b, #153021);
+}
+
+.leaf.left {
+    left: 90px;
+    animation-delay: 0.5s;
+}
+
+.leaf.right {
+    right: 90px;
+    transform: rotate(135deg);
+    animation-delay: 1s;
+}
+
+/* Capas de pétalos mejoradas */
+.petals {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    bottom: 220px;
+    left: 75px;
+    z-index: 3;
+    transform-style: preserve-3d;
+}
+
+/* Pétalos individuales mejorados */
+.petal {
+    position: absolute;
+    background: linear-gradient(to bottom, #ffd700, #ffdf35, #fce38a);
+    border-radius: 100% 100% 100% 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.5s ease;
+    transform-origin: center bottom;
+}
+
+body.night-mode .petal {
+    background: linear-gradient(to bottom, #ffd700, #e6c200, #d4af37);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.petal:hover {
+    transform: scale(1.15) rotate(5deg);
+    z-index: 10;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+body.night-mode .petal:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Pétalos exteriores */
+.petal-1 {
+    width: 70px;
+    height: 70px;
+    top: 0;
+    left: 40px;
+    transform: rotate(0deg);
+    animation: petalMove 12s ease-in-out infinite;
+}
+
+.petal-2 {
+    width: 70px;
+    height: 70px;
+    top: 15px;
+    left: 0;
+    transform: rotate(60deg);
+    animation: petalMove 12s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.petal-3 {
+    width: 70px;
+    height: 70px;
+    top: 50px;
+    left: 0;
+    transform: rotate(120deg);
+    animation: petalMove 12s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+.petal-4 {
+    width: 70px;
+    height: 70px;
+    top: 75px;
+    left: 40px;
+    transform: rotate(180deg);
+    animation: petalMove 12s ease-in-out infinite;
+    animation-delay: 3s;
+}
+
+.petal-5 {
+    width: 70px;
+    height: 70px;
+    top: 50px;
+    left: 80px;
+    transform: rotate(240deg);
+    animation: petalMove 12s ease-in-out infinite;
+    animation-delay: 4s;
+}
+
+.petal-6 {
+    width: 70px;
+    height: 70px;
+    top: 15px;
+    left: 80px;
+    transform: rotate(300deg);
+    animation: petalMove 12s ease-in-out infinite;
+    animation-delay: 5s;
+}
+
+/* Pétalos interiores */
+.petal-7 {
+    width: 60px;
+    height: 60px;
+    top: 25px;
+    left: 45px;
+    transform: rotate(30deg);
+    background: linear-gradient(to bottom, #ffdf35, #ffdf35, #fce38a);
+    animation: petalMoveInner 10s ease-in-out infinite;
+}
+
+body.night-mode .petal-7 {
+    background: linear-gradient(to bottom, #e6c200, #e6c200, #d4af37);
+}
+
+.petal-8 {
+    width: 60px;
+    height: 60px;
+    top: 45px;
+    left: 25px;
+    transform: rotate(90deg);
+    background: linear-gradient(to bottom, #ffdf35, #ffdf35, #fce38a);
+    animation: petalMoveInner 10s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+body.night-mode .petal-8 {
+    background: linear-gradient(to bottom, #e6c200, #e6c200, #d4af37);
+}
+
+.petal-9 {
+    width: 60px;
+    height: 60px;
+    top: 45px;
+    left: 65px;
+    transform: rotate(210deg);
+    background: linear-gradient(to bottom, #ffdf35, #ffdf35, #fce38a);
+    animation: petalMoveInner 10s ease-in-out infinite;
+    animation-delay: 3s;
+}
+
+body.night-mode .petal-9 {
+    background: linear-gradient(to bottom, #e6c200, #e6c200, #d4af37);
+}
+
+/* Centro de la rosa mejorado */
+.center {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(#704214, #8B4513, #704214);
+    border-radius: 50%;
+    top: 55px;
+    left: 55px;
+    z-index: 5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    animation: centerPulse 4s ease-in-out infinite;
+    transition: background 1.5s ease, box-shadow 1.5s ease;
+}
+
+body.night-mode .center {
+    background: radial-gradient(#503010, #603813, #503010);
+    box-shadow: 0 0 10px rgba(139, 69, 19, 0.5);
+}
+
+.center::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(#D2691E, #8B4513);
+    opacity: 0.6;
+    transition: background 1.5s ease;
+}
+
+body.night-mode .center::before {
+    background: radial-gradient(#b35917, #603813);
+}
+
+/* Efecto de brillo */
+.glow {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(rgba(255, 215, 0, 0.2), transparent 70%);
+    top: 50px;
+    left: 50px;
+    z-index: 0;
+    animation: glowEffect 6s ease-in-out infinite;
+    transition: background 1.5s ease;
+}
+
+body.night-mode .glow {
+    background: radial-gradient(rgba(255, 215, 0, 0.3), transparent 70%);
+}
+
+/* Botón mejorado */
+.button-container {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 15px 35px;
+    background: linear-gradient(to bottom, #d4a017, #b8860b);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+body.night-mode button {
+    background: linear-gradient(to bottom, #b8860b, #996515);
+    box-shadow: 0 5px 15px rgba(153, 101, 21, 0.5);
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(184, 134, 11, 0.6);
+}
+
+body.night-mode button:hover {
+    box-shadow: 0 8px 20px rgba(153, 101, 21, 0.7);
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:active {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 3px 10px rgba(184, 134, 11, 0.4);
+}
+
+/* Decoraciones adicionales */
+.decoration {
+    position: absolute;
+    font-size: 2em;
+    color: rgba(255, 215, 0, 0.3);
+    z-index: 0;
+    animation: floatAround 20s linear infinite;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .decoration {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.decoration:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    animation-duration: 25s;
+}
+
+.decoration:nth-child(2) {
+    top: 20%;
+    right: 15%;
+    animation-duration: 20s;
+    animation-delay: 2s;
+}
+
+.decoration:nth-child(3) {
+    bottom: 30%;
+    left: 15%;
+    animation-duration: 30s;
+    animation-delay: 5s;
+}
+
+.decoration:nth-child(4) {
+    bottom: 15%;
+    right: 10%;
+    animation-duration: 22s;
+    animation-delay: 3s;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    color: #8B7500;
+    font-size: 1.1em;
+    opacity: 0.8;
+    transition: color 1.5s ease;
+}
+
+body.night-mode footer {
+    color: #e6c200;
+}
+
+/* Animaciones mejoradas */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    33% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+
+    66% {
+        transform: translateY(5px) rotate(-1deg);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes leafFloat {
+
+    0%,
+    100% {
+        transform: rotate(-45deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(-40deg) scale(1.05);
+    }
+}
+
+@keyframes petalMove {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(3deg) scale(1.05);
+    }
+}
+
+@keyframes petalMoveInner {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(5deg) scale(1.08);
+    }
+}
+
+@keyframes centerPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes glowEffect {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes messageFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes floatAround {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(20px, 20px) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(0, 40px) rotate(180deg);
+    }
+
+    75% {
+        transform: translate(-20px, 20px) rotate(270deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}
+
+/* Efectos de confeti */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ffd700;
+    opacity: 0;
+    z-index: 100;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+
+    .subtitle {
+        font-size: 1.2em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+
+    .rose-scene {
+        transform: scale(0.8);
+        margin: 20px auto;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .rose-scene {
+        transform: scale(0.7);
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+
+/* Estilos para la página de carta */
+.letter-container {
+    display: none;
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fffdf0;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    position: relative;
+    border: 1px solid #f0e68c;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+    z-index: 10;
+}
+
+body.night-mode .letter-container {
+    background: #1a1a2e;
+    border: 1px solid #4a4a6a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.letter-container.visible {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.letter-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.letter-header h2 {
+    font-size: 2.2em;
+    color: #d4a017;
+    margin-bottom: 10px;
+    font-family: 'Georgia', serif;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .letter-header h2 {
+    color: #ffd700;
+}
+
+.letter-date {
+    font-style: italic;
+    color: #8B7500;
+    margin-bottom: 20px;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .letter-date {
+    color: #e6c200;
+}
+
+.letter-content {
+    text-align: left;
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: #5a4a1f;
+    font-family: 'Georgia', serif;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .letter-content {
+    color: #e6e6ff;
+}
+
+.letter-content p {
+    margin-bottom: 20px;
+    text-align: left;
+    max-width: 100%;
+}
+
+.letter-signature {
+    text-align: right;
+    margin-top: 40px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2em;
+    color: #d4a017;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .letter-signature {
+    color: #ffd700;
+}
+
+.letter-back {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.seal {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 80px;
+    height: 80px;
+    background: #d4a017;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2em;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    transform: rotate(15deg);
+    transition: background 1.5s ease;
+}
+
+body.night-mode .seal {
+    background: #b8860b;
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
+}
+
+.letter-border {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border: 1px solid #fce38a;
+    border-radius: 10px;
+    pointer-events: none;
+    transition: border-color 1.5s ease;
+}
+
+body.night-mode .letter-border {
+    border: 1px solid #4a4a6a;
+}
+
+/* Toggle para modo nocturno */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: rotate(30deg);
+}
+
+body.night-mode .theme-toggle {
+    background: rgba(26, 26, 46, 0.7);
+}
+
+.theme-toggle i {
+    font-size: 1.5em;
+    color: #d4a017;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .theme-toggle i {
+    color: #ffd700;
+}
+
+/* Mensaje flotante */
+.floating-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.night-mode .floating-message {
+    background: rgba(26, 26, 46, 0.9);
+}
+
+.floating-message.show {
+    opacity: 1;
+}
+
+.floating-message i {
+    color: #d4a017;
+}
+
+body.night-mode .floating-message i {
+    color: #ffd700;
+}
+
+/* Efecto de partículas */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    background: #ffd700;
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 15s linear infinite;
+}
+
+body.night-mode .particle {
+    background: #ffffff;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.7;
+    }
+
+    90% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Audio control */
+.audio-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+body.night-mode .audio-control {
+    background: rgba(26, 26, 46, 0.7);
+}
+
+.audio-control i {
+    font-size: 1.5em;
+    color: #d4a017;
+    transition: color 1.5s ease;
+}
+
+body.night-mode .audio-control i {
+    color: #ffd700;
+}
